@@ -1,0 +1,106 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>英文与摩斯电码转换</title>
+    <script>
+        // 定义摩斯电码表，使用“饺”和“子”代替·和-
+        var morseTable = {
+            "A": "饺子",
+            "B": "子饺饺饺",
+            "C": "子饺子饺",
+            "D": "子饺饺",
+            "E": "饺",
+            "F": "饺饺子饺",
+            "G": "子子饺",
+            "H": "饺饺饺饺",
+            "I": "饺饺",
+            "J": "饺子子子",
+            "K": "子饺子",
+            "L": "饺子饺饺",
+            "M": "子子",
+            "N": "子饺",
+            "O": "子子子",
+            "P": "饺子子饺",
+            "Q": "子子饺子",
+            "R": "饺子饺",
+            "S": "饺饺饺",
+            "T": "子",
+            "U": "饺饺子",
+            "V": "饺饺饺子",
+            "W": "饺子子",
+            "X": "子饺饺子",
+            "Y": "子饺子子",
+            "Z": "子子饺饺",
+            "0": "子子子子子",
+            "1": "饺子子子子",
+            "2": "饺饺子子子",
+            "3": "饺饺饺子子",
+            "4": "饺饺饺饺子",
+            "5": "饺饺饺饺饺",
+            "6": "子饺饺饺饺",
+            "7": "子子饺饺饺",
+            "8": "子子子饺饺",
+            "9": "子子子子饺",
+            ".": "饺子饺子饺子饺子",
+            ",": "子子饺饺子子",
+            "?": "饺饺子子饺饺",
+            "'": "饺子子子子饺",
+            "!": "子饺子饺子子",
+            "/": "子饺饺子饺",
+            "(": "子饺子子子",
+            ")": "子饺子子子饺",
+            "&": "饺子饺饺饺",
+            ":": "子子子饺饺饺",
+            ";": "子饺子饺子饺",
+            "=": "子饺饺饺子",
+            "+": "饺子饺子饺",
+            "-": "子饺饺饺饺子",
+            "_": "饺饺子子饺子",
+            "\"": "饺子饺饺子饺",
+            "$": "饺饺饺子饺饺",
+            "@": "饺子子饺子饺",
+            " ": " "
+        };
+
+        // 定义反转的摩斯电码表，用于从摩斯电码转换为英文
+        var reverseMorseTable = {};
+        for (var key in morseTable) {
+            reverseMorseTable[morseTable[key]] = key;
+        }
+
+        // 定义转换函数，根据输入的类型判断是从英文转换为摩斯电码，还是从摩斯电码转换为英文
+        function convert() {
+            var input = document.getElementById("input").value.toUpperCase(); // 获取输入框的值，并转换为大写
+            var output = ""; // 定义输出变量
+            if (input.includes("饺") || input.includes("子")) { // 如果输入包含“饺”或“子”，则认为是摩斯电码
+                var words = input.split("  "); // 以两个空格为分隔符，分割输入为单词
+                for (var i = 0; i < words.length; i++) { // 遍历每个单词
+                    var chars = words[i].split(" "); // 以一个空格为分隔符，分割单词为字符
+                    for (var j = 0; j < chars.length; j++) { // 遍历每个字符
+                        var char = reverseMorseTable[chars[j]]; // 从反转的摩斯电码表中查找对应的英文字符
+                        if (char) { // 如果找到了
+                            output += char; // 将英文字符添加到输出中
+                        }
+                    }
+                    output += " "; // 在每个单词之后添加一个空格
+                }
+            } else { // 否则，认为是英文
+                for (var i = 0; i < input.length; i++) { // 遍历每个英文字符
+                    var char = morseTable[input[i]]; // 从摩斯电码表中查找对应的摩斯电码
+                    if (char) { // 如果找到了
+                        output += char + " "; // 将摩斯电码添加到输出中，并在每个字符之后添加一个空格
+                    }
+                }
+            }
+            document.getElementById("output").value = output; // 将输出显示在输出框中
+        }
+    </script>
+</head>
+<body>
+    <h1>英文与摩斯电码转换</h1>
+    <p>请输入英文或摩斯电码，使用“饺”和“子”代替·和-，并点击转换按钮</p>
+    <textarea id="input" rows="5" cols="50"></textarea>
+    <button onclick="convert()">转换</button>
+    <textarea id="output" rows="5" cols="50" readonly></textarea>
+</body>
+</html>
